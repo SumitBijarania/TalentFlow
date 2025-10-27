@@ -57,5 +57,5 @@ It simulates a real-world job portal where HRs can manage **Jobs**, **Candidates
 
 ### 1️ Clone the repository
 ```bash
-git clone https://github.com/<your-username>/TalentFlow.git
+git clone https://github.com/SumitBijarania/TalentFlow.git
 cd TalentFlow
