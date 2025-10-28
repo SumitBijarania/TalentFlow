@@ -33,6 +33,7 @@ export default function AssessmentsBuilder() {
 
   // preview answers used for conditional logic in preview
   const [previewAnswers, setPreviewAnswers] = useState({});
+  // ...existing code...
 
   useEffect(() => {
     const load = async () => {
@@ -125,6 +126,7 @@ export default function AssessmentsBuilder() {
   };
 
   const selectedSection = sections.find(s => s.id === selectedSectionId) || null;
+  // ...existing code...
   const selectedQuestion = selectedSection?.questions?.find(q => q.id === selectedQuestionId) || null;
 
   return (
@@ -162,12 +164,6 @@ export default function AssessmentsBuilder() {
 
               <div className="questions-header">
                 <h4>Questions</h4>
-                <div>
-                  <select onChange={e => addQuestion(e.target.value)} defaultValue="short-text">
-                    {QUESTION_TYPES.map(t => <option key={t} value={t}>{t}</option>)}
-                  </select>
-                  <button className="button secondary" onClick={() => addQuestion()}>Add Question</button>
-                </div>
               </div>
 
               <div className="questions-list">
@@ -264,7 +260,7 @@ export default function AssessmentsBuilder() {
                 <h4>{selectedSection.title}</h4>
                 <p>{selectedSection.description}</p>
                 {selectedSection.questions.map(q => {
-                  // evaluate conditional
+                  
                   const cond = q.conditionalRules;
                   if (cond && cond.dependsOn) {
                     const targetVal = previewAnswers[cond.dependsOn];

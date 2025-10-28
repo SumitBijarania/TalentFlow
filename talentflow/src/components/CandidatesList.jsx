@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import CandidateForm from './CandidateForm';
 
 const getStageColor = (stage) => {
@@ -15,6 +15,7 @@ const getStageColor = (stage) => {
 };
 
 const CandidatesList = () => {
+  const navigate = useNavigate();
   const [candidates, setCandidates] = useState({ data: [], total: 0 });
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -72,9 +73,17 @@ const CandidatesList = () => {
     <div className="candidates-list">
       <div className="candidates-header">
         <h2>Candidates</h2>
-        <button className="add-button" onClick={() => setShowForm(true)}>
-          + Add Candidate
-        </button>
+        <div style={{ display: 'flex', gap: '1rem' }}>
+          <button 
+            className="button secondary" 
+            onClick={() => navigate('/candidates/kanban')}
+          >
+            📊 Kanban View
+          </button>
+          <button className="add-button" onClick={() => setShowForm(true)}>
+            + Add Candidate
+          </button>
+        </div>
       </div>
 
       <div className="filters">

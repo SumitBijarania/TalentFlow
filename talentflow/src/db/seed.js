@@ -74,8 +74,7 @@ export const generateJobs = () => {
   });
 };
 
-// Helper function to generate technical questions based on job title
-// Returns exactly 10 questions per role (2 general + 8 role-specific)
+
 const getTechnicalQuestions = (jobTitle) => {
     const generalQuestions = [
       {
@@ -94,7 +93,7 @@ const getTechnicalQuestions = (jobTitle) => {
       }
     ];
 
-    // Job-specific technical questions (8 per role)
+    
     const jobSpecificQuestions = {
       'Frontend Developer': [
         {
@@ -968,7 +967,6 @@ const getTechnicalQuestions = (jobTitle) => {
       ]
     };
 
-    // Fallback: provide 8 general technical questions if role not matched
     const fallbackSpecific = [
       { id: crypto.randomUUID(), type: 'multi-choice', text: 'Which VCS and branching strategies have you used?', required: true, options: ['GitFlow', 'Trunk-Based', 'GitHub Flow', 'Release Branching'] },
       { id: crypto.randomUUID(), type: 'multi-choice', text: 'Which CI/CD tools have you configured?', required: true, options: ['GitHub Actions', 'GitLab CI', 'Jenkins', 'CircleCI', 'Azure DevOps'] },
