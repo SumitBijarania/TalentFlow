@@ -1,19 +1,16 @@
 import { faker } from '@faker-js/faker';
 
-// Helper to generate a random date within the last 6 months
 const getRandomRecentDate = () => {
   const date = new Date();
   date.setMonth(date.getMonth() - Math.floor(Math.random() * 6));
   return date;
 };
 
-// Helper to get random array elements
 const getRandomItems = (array, min, max) => {
   const count = min + Math.floor(Math.random() * (max - min + 1));
   return Array.from({ length: count }, () => array[Math.floor(Math.random() * array.length)]);
 };
 
-// Shared arrays used by multiple generators
 const JOB_TITLES = [
   'Software Engineer', 'Product Manager', 'UX Designer', 'Data Scientist',
   'DevOps Engineer', 'Frontend Developer', 'Backend Developer', 'Full Stack Developer',
@@ -32,7 +29,6 @@ const LOCATIONS = [
   'Singapore', 'Sydney', 'Toronto', 'Amsterdam'
 ];
 
-// Job descriptions in English
 const JOB_DESCRIPTIONS = {
   'Software Engineer': 'We are seeking a talented Software Engineer to join our development team. You will be responsible for designing, developing, and maintaining software applications. The ideal candidate has strong problem-solving skills and experience with modern development practices.',
   'Frontend Developer': 'Join our team as a Frontend Developer where you will create responsive and intuitive user interfaces. You will work with modern JavaScript frameworks and collaborate closely with designers and backend developers to deliver exceptional user experiences.',
@@ -980,7 +976,6 @@ const getTechnicalQuestions = (jobTitle) => {
 
     const specificQuestions = jobSpecificQuestions[jobTitle] || fallbackSpecific;
 
-    // Ensure exactly 10 questions by combining 2 general + 8 specific
     return [...generalQuestions, ...specificQuestions].slice(0, 10);
 };
 
@@ -1051,7 +1046,6 @@ export const generateAssessments = (jobs) => {
 });
 };
 
-// Generate candidate data
 export const generateCandidates = (jobIds) => {
   const stages = ['applied', 'screening', 'interview', 'offer', 'hired', 'rejected'];
   
