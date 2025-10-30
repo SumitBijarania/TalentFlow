@@ -1,0 +1,127 @@
+.candidate-profile-page {
+  max-width: 800px;
+  margin: 20px auto;
+  padding: 20px;
+}
+
+.candidate-profile {
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.candidate-profile-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.avatar {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background-color: #007bff;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  font-weight: bold;
+  margin-right: 15px;
+}
+
+.candidate-info {
+  flex: 1;
+}
+
+.candidate-name {
+  margin: 0;
+  font-size: 24px;
+  font-weight: bold;
+  color: #333;
+}
+
+.candidate-email {
+  margin: 5px 0 0;
+  color: #666;
+  font-size: 14px;
+}
+
+.candidate-details {
+  margin-top: 20px;
+}
+
+.candidate-detail {
+  margin-bottom: 12px;
+  font-size: 16px;
+  color: #555;
+}
+
+.candidate-detail strong {
+  color: #333;
+  margin-right: 8px;
+}
+
+.candidate-profile-error {
+  text-align: center;
+  color: #dc3545;
+  font-size: 18px;
+  padding: 40px;
+}
+
+.candidate-profile-loading {
+  text-align: center;
+  font-size: 18px;
+  padding: 40px;
+  color: #666;
+}
+
+.candidate-timeline {
+  margin: 24px 0 0 40px;
+  padding: 0;
+  list-style: none;
+  border-left: 3px solid #dee2e6;
+}
+.timeline-event {
+  display: flex;
+  align-items: flex-start;
+  position: relative;
+  margin-bottom: 24px;
+}
+.timeline-dot {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  position: absolute;
+  left: -10px;
+  top: 0px;
+}
+.timeline-content {
+  margin-left: 24px;
+  background: #f8f9fa;
+  border-radius: 8px;
+  padding: 8px 16px;
+  min-width: 160px;
+}
+.timeline-label {
+  font-weight: 600;
+  margin-right: 10px;
+}
+.timeline-date {
+  color: #555;
+  font-size: 12px;
+}
+.timeline-notes {
+  margin-top: 8px;
+  color: #666;
+  font-size: 14px;
+}
+.timeline-title {
+  margin-top: 30px;
+  margin-bottom: 10px;
+  font-size: 20px;
+  color: #333;
+}
+

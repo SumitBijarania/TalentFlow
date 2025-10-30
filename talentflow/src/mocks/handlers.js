@@ -172,6 +172,26 @@ export const handlers = [
     }
   }),
 
+  http.get('/candidates/:id', async ({ params, request }) => {
+    try {
+      await simulateNetwork(request);
+      const { id } = params;
+      const candidate = await db.candidates.get(id);
+      if (!candidate) {
+        return new Response(JSON.stringify({ error: 'Candidate not found' }), {
+          status: 404,
+          headers: { 'Content-Type': 'application/json' },
+        });
+      }
+      return jsonResponse(candidate);
+    } catch (error) {
+      return new Response(JSON.stringify({ error: error.message }), {
+        status: 500,
+        headers: { 'Content-Type': 'application/json' },
+      });
+    }
+  }),
+
   http.patch('/candidates/:id', async ({ request, params }) => {
     try {
       await simulateNetwork(request);

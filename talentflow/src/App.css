@@ -99,177 +99,282 @@ body, html {
   transform: translateX(-50%) scaleX(0);
   width: 80%;
   height: 2px;
+}
 
 /* Kanban Board Styles */
 .candidate-kanban {
-  padding: 2rem;
+  padding: 20px;
   width: 100%;
+  background: #f8f9fc;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
 }
 
 .kanban-header {
+  margin-bottom: 28px;
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  margin-bottom: 2rem;
-  flex-wrap: wrap;
-  gap: 1rem;
+  justify-content: space-between;
 }
 
 .kanban-header h2 {
-  font-size: 1.75rem;
-  color: var(--text);
+  font-size: 1.8rem;
+  color: #333333;
   margin: 0;
+  font-weight: 600;
 }
 
 .kanban-board {
   display: flex;
-  gap: 1.5rem;
+  flex-direction: row;
+  gap: 22px;
   overflow-x: auto;
-  padding-bottom: 1rem;
-  min-height: 70vh;
+  padding-bottom: 8px;
+  min-height: 440px;
+}
+
+.kanban-board-matrix {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  overflow-x: auto;
+}
+
+.kanban-board-row {
+  display: flex;
+  flex-direction: row;
+  gap: 24px;
+  min-width: 980px;
 }
 
 .kanban-column {
-  min-width: 280px;
-  flex: 1;
-  background: rgba(255, 255, 255, 0.7);
-  backdrop-filter: blur(10px);
-  border-radius: var(--radius-lg);
-  box-shadow: var(--shadow);
+  background: #fafbfc;
+  border-radius: 12px;
+  padding: 0 10px 14px 10px;
+  min-width: 320px;
+  flex: 0 0 320px;
+  transition: box-shadow 0.22s;
+  box-shadow: 0 1px 6px rgba(34, 84, 122, 0.09);
   display: flex;
   flex-direction: column;
-  max-height: 80vh;
+}
+
+.kanban-column-matrix {
+  background: #fafbfc;
+  border-radius: 12px;
+  min-width: 300px;
+  max-width: 320px;
+  flex: 1 1 0;
+  box-shadow: 0 1px 6px rgba(34, 84, 122, 0.08);
+  display: flex;
+  flex-direction: column;
+  height: 420px;
+}
+
+.kanban-column.drag-over {
+  box-shadow: 0 0 0 4px #4D96FF33;
 }
 
 .kanban-column-header {
-  padding: 1.25rem;
-  border-top: 4px solid var(--primary-color);
-  border-bottom: 1px solid var(--border);
+  font-weight: 600;
+  color: #fff;
+  border-radius: 10px 10px 0 0;
+  padding: 14px 12px;
+  margin-bottom: 14px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background: rgba(255, 255, 255, 0.9);
-  border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+  font-size: 18px;
 }
 
-.kanban-column-header h3 {
-  font-size: 1rem;
-  font-weight: 700;
-  color: var(--text);
-  margin: 0;
+.kanban-column-header-matrix {
+  font-weight: 600;
+  color: #fff;
+  border-radius: 10px 10px 0 0;
+  padding: 14px 12px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 18px;
 }
 
 .candidate-count {
-  background: var(--primary-light);
-  color: var(--primary-color);
-  padding: 0.25rem 0.75rem;
-  border-radius: 12px;
-  font-size: 0.875rem;
   font-weight: 600;
 }
 
 .kanban-cards {
-  flex: 1;
-  overflow-y: auto;
+  flex: 1 1 auto;
+  min-height: 20px;
   padding: 1rem;
   display: flex;
   flex-direction: column;
-  gap: 0.75rem;
+  gap: 1rem;
+}
+
+.kanban-cards-matrix {
+  padding: 12px;
+  overflow-y: auto;
+  flex: 1 1 auto;
+  min-height: 60px;
 }
 
 .kanban-card {
-  background: white;
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  padding: 1rem;
   cursor: grab;
-  transition: var(--transition);
-  box-shadow: var(--shadow-sm);
-}
-
-.kanban-card:active {
-  cursor: grabbing;
+  user-select: none;
+  margin-bottom: 12px;
+  padding: 15px 12px;
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  transition: all 0.2s ease;
 }
 
 .kanban-card:hover {
-  box-shadow: var(--shadow);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
   transform: translateY(-2px);
-  border-color: var(--primary-color);
 }
 
-.kanban-card-link {
-  text-decoration: none;
-  color: inherit;
-  display: block;
+.kanban-card-header {
+  display: flex;
+  align-items: center;
+}
+
+.avatar {
+  width: 40px;
+  height: 40px;
+  background: #ececec;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 18px;
+  margin-right: 13px;
+}
+
+.title-block {
+  flex: 1 1 auto;
 }
 
 .kanban-card-name {
-  font-weight: 600;
-  font-size: 0.95rem;
-  color: var(--text);
-  margin-bottom: 0.5rem;
+  font-size: 16px;
+  font-weight: 500;
+  color: #333333;
 }
 
 .kanban-card-email {
-  font-size: 0.85rem;
-  color: var(--text-secondary);
-  margin-bottom: 0.5rem;
+  color: #666;
+  font-size: 13px;
+  margin-top: 2px;
+}
+
+.kanban-card-meta {
+  margin-top: 8px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
 }
 
 .kanban-card-experience {
-  font-size: 0.8rem;
-  color: var(--text-secondary);
-  margin-bottom: 0.5rem;
+  background: #f5f5f5;
+  border-radius: 6px;
+  padding: 2px 6px;
+  font-size: 12px;
 }
 
 .kanban-card-skills {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.35rem;
-  margin-top: 0.75rem;
+  gap: 6px;
 }
 
-.kanban-card-skills .skill-tag {
-  background: var(--primary-light);
-  color: var(--primary-color);
-  padding: 0.2rem 0.5rem;
+.skill-tag {
+  background: #dde8ff;
   border-radius: 6px;
-  font-size: 0.75rem;
-  font-weight: 500;
+  padding: 2px 8px;
+  font-size: 12px;
 }
 
-.kanban-card-skills .skill-more {
+.skill-more {
+  background: #6BCB77;
+  color: #fff;
+  border-radius: 6px;
+  padding: 2px 8px;
+  font-size: 12px;
+}
+
+.kanban-searchbox {
+  padding: 6px 10px;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+  font-size: 15px;
+}
+
+/* Candidates table */
+.candidates-table-wrap {
+  width: 100%;
+  overflow-x: auto;
+  background: rgba(255, 255, 255, 0.75);
+  backdrop-filter: blur(8px);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow);
+}
+
+.candidates-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.candidates-table thead th {
+  text-align: left;
+  padding: 0.85rem 1rem;
+  background: rgba(249,250,251,0.9);
+  border-bottom: 1px solid var(--border);
+  font-size: 0.9rem;
   color: var(--text-secondary);
-  font-size: 0.75rem;
-  font-weight: 500;
+  cursor: pointer;
+  user-select: none;
 }
 
-.kanban-empty {
-  text-align: center;
-  padding: 2rem 1rem;
+.candidates-table tbody td {
+  padding: 0.85rem 1rem;
+  border-bottom: 1px solid var(--border);
+  font-size: 0.95rem;
+}
+
+.candidate-link {
+  color: var(--primary-color);
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.candidate-link:hover {
+  text-decoration: underline;
+}
+
+.stage-badge {
+  display: inline-block;
+  color: white;
+  padding: 0.2rem 0.6rem;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: capitalize;
+}
+
+.pagination {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.pagination .page-info {
   color: var(--text-secondary);
   font-size: 0.9rem;
-  border: 2px dashed var(--border);
-  border-radius: var(--radius);
-  background: rgba(249, 250, 251, 0.5);
-}
-
-.kanban-loading,
-.kanban-error {
-  padding: 2rem;
-  text-align: center;
-  font-size: 1rem;
-  color: var(--text-secondary);
-}
-
-.kanban-error {
-  color: var(--danger-color);
-}
-
-/* Drag and drop visual feedback */
-.kanban-column.drag-over {
-  background: rgba(79, 70, 229, 0.05);
-  border: 2px dashed var(--primary-color);
 }
 
 /* Responsive Kanban */
@@ -293,8 +398,59 @@ body, html {
     align-items: flex-start;
   }
 }
-  background: var(--primary-color);
-  transition: var(--transition);
+
+/* Table mode inside columns */
+.kanban-table-wrap {
+  padding: 0.5rem 0.75rem 1rem;
+}
+
+.kanban-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: transparent;
+}
+
+.kanban-table thead th {
+  position: sticky;
+  top: 0;
+  background: rgba(255,255,255,0.95);
+  border-bottom: 1px solid var(--border);
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+  text-align: left;
+  padding: 0.5rem 0.5rem;
+}
+
+.kanban-table tbody td {
+  padding: 0.5rem 0.5rem;
+  border-bottom: 1px solid var(--border);
+  font-size: 0.9rem;
+}
+
+.kanban-row {
+  cursor: grab;
+}
+
+.kanban-row:hover {
+  background: rgba(79,70,229,0.04);
+}
+
+.muted { color: var(--text-secondary); font-size: 0.85rem; }
+
+.view-toggle .button.small {
+  padding: 0.25rem 0.6rem;
+  font-size: 0.8rem;
+}
+
+.view-toggle .button.small.active {
+  background: var(--primary-light);
+  color: var(--primary-color);
+}
+
+.view-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
 }
 
 .header nav a:hover::after {
@@ -309,7 +465,7 @@ main {
   z-index: 1;
 }
 
-/* Enhanced Buttons */
+
 button {
   padding: 0.75rem 1.5rem;
   border: none;
@@ -1127,126 +1283,126 @@ button:disabled {
   letter-spacing: 0.3px;
 }
 
-  .no-candidates {
-    text-align: center;
-    padding: 4rem 2rem;
-    background: var(--surface);
-    border-radius: var(--radius-lg);
-    color: var(--text-secondary);
-    box-shadow: var(--shadow);
-    border: 2px dashed var(--border);
-  }
+.no-candidates {
+  text-align: center;
+  padding: 4rem 2rem;
+  background: var(--surface);
+  border-radius: var(--radius-lg);
+  color: var(--text-secondary);
+  box-shadow: var(--shadow);
+  border: 2px dashed var(--border);
+}
 
-  .no-candidates h3 {
-    font-size: 1.5rem;
-    color: var(--text);
-    margin-bottom: 0.5rem;
-  }
+.no-candidates h3 {
+  font-size: 1.5rem;
+  color: var(--text);
+  margin-bottom: 0.5rem;
+}
 
-  .add-button {
-    background: linear-gradient(135deg, var(--primary-color), var(--primary-hover));
-    color: white;
-    border: none;
-    padding: 0.75rem 1.5rem;
-    border-radius: var(--radius);
-    cursor: pointer;
-    font-weight: 600;
-    box-shadow: var(--shadow);
-    transition: var(--transition);
-  }
+.add-button {
+  background: linear-gradient(135deg, var(--primary-color), var(--primary-hover));
+  color: white;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: var(--radius);
+  cursor: pointer;
+  font-weight: 600;
+  box-shadow: var(--shadow);
+  transition: var(--transition);
+}
 
-  .add-button:hover {
-    background: linear-gradient(135deg, var(--primary-hover), #3730A3);
-    transform: translateY(-2px);
-    box-shadow: var(--shadow-lg);
-  }
+.add-button:hover {
+  background: linear-gradient(135deg, var(--primary-hover), #3730A3);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-lg);
+}
 
-  /* Assessments List styles */
-  .assessments-list {
-    width: 100%;
-    padding: 1rem;
-  }
+/* Assessments List styles */
+.assessments-list {
+  width: 100%;
+  padding: 1rem;
+}
 
-  .assessments-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 2.5rem;
-    padding-bottom: 1.5rem;
-    border-bottom: 2px solid var(--border);
-  }
+.assessments-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2.5rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 2px solid var(--border);
+}
 
-  .assessments-header h1 {
-    color: var(--text);
-    font-size: 2.5rem;
-    font-weight: 800;
-    margin: 0;
-    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-  }
+.assessments-header h1 {
+  color: var(--text);
+  font-size: 2.5rem;
+  font-weight: 800;
+  margin: 0;
+  background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
 
-  .assessments-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-    gap: 1.5rem;
-  }
+.assessments-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 1.5rem;
+}
 
-  .assessment-card {
-    background: var(--surface);
-    padding: 1.75rem;
-    border-radius: var(--radius-lg);
-    box-shadow: var(--shadow);
-    text-decoration: none;
-    color: inherit;
-    transition: var(--transition);
-    border: 1px solid transparent;
-    position: relative;
-    overflow: hidden;
-  }
+.assessment-card {
+  background: var(--surface);
+  padding: 1.75rem;
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow);
+  text-decoration: none;
+  color: inherit;
+  transition: var(--transition);
+  border: 1px solid transparent;
+  position: relative;
+  overflow: hidden;
+}
 
-  .assessment-card::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 4px;
-    background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
-    opacity: 0;
-    transition: var(--transition);
-  }
+.assessment-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+  opacity: 0;
+  transition: var(--transition);
+}
 
-  .assessment-card:hover {
-    transform: translateY(-4px);
-    box-shadow: var(--shadow-xl);
-    border-color: var(--primary-light);
-  }
+.assessment-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-xl);
+  border-color: var(--primary-light);
+}
 
-  .assessment-card:hover::before {
-    opacity: 1;
-  }
+.assessment-card:hover::before {
+  opacity: 1;
+}
 
-  .assessment-card h3 {
-    margin: 0 0 1.25rem;
-    color: var(--text);
-    font-size: 1.35rem;
-    font-weight: 700;
-    transition: var(--transition);
-  }
+.assessment-card h3 {
+  margin: 0 0 1.25rem;
+  color: var(--text);
+  font-size: 1.35rem;
+  font-weight: 700;
+  transition: var(--transition);
+}
 
-  .assessment-card:hover h3 {
-    color: var(--primary-color);
-  }
+.assessment-card:hover h3 {
+  color: var(--primary-color);
+}
 
-  .assessment-details {
-    display: grid;
-    gap: 0.75rem;
-    font-size: 0.95rem;
-    color: var(--text-secondary);
-    font-weight: 500;
-  }
+.assessment-details {
+  display: grid;
+  gap: 0.75rem;
+  font-size: 0.95rem;
+  color: var(--text-secondary);
+  font-weight: 500;
+}
 
 .no-assessments {
   text-align: center;

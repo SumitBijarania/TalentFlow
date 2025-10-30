@@ -22,6 +22,11 @@ const CandidatesList = () => {
   const [showForm, setShowForm] = useState(false);
   const [search, setSearch] = useState('');
   const [selectedStage, setSelectedStage] = useState('');
+  const [jobsMap, setJobsMap] = useState({});
+  const [sortBy, setSortBy] = useState('appliedDate');
+  const [sortDir, setSortDir] = useState('desc');
+  const [page, setPage] = useState(1);
+  const pageSize = 20;
 
   const fetchCandidates = async () => {
     try {
@@ -47,6 +52,23 @@ const CandidatesList = () => {
     fetchCandidates();
   }, [search, selectedStage]);
 
+  // Fetch jobs once to map jobId -> title
+  useEffect(() => {
+    const loadJobs = async () => {
+      try {
+        const res = await fetch('/jobs?page=1&pageSize=1000');
+        if (!res.ok) return;
+        const data = await res.json();
+        const map = {};
+        data.data.forEach(j => { map[j.id] = j.title; });
+        setJobsMap(map);
+      } catch (e) {
+        // ignore
+      }
+    };
+    loadJobs();
+  }, []);
+
   const handleAddCandidate = async (candidateData) => {
     try {
       const response = await fetch('/candidates', {
@@ -68,6 +90,36 @@ const CandidatesList = () => {
 
   if (loading) return <div>Loading candidates...</div>;
   if (error) return <div>Error: {error}</div>;
+
+  // Sorting and pagination (client-side)
+  const sorted = [...(candidates.data || [])].sort((a, b) => {
+    const dir = sortDir === 'asc' ? 1 : -1;
+    if (sortBy === 'name') return a.name.localeCompare(b.name) * dir;
+    if (sortBy === 'email') return a.email.localeCompare(b.email) * dir;
+    if (sortBy === 'stage') return a.stage.localeCompare(b.stage) * dir;
+    if (sortBy === 'job') {
+      const aj = jobsMap[a.jobId] || '';
+      const bj = jobsMap[b.jobId] || '';
+      return aj.localeCompare(bj) * dir;
+    }
+    // appliedDate default
+    const ad = a.appliedDate ? new Date(a.appliedDate).getTime() : 0;
+    const bd = b.appliedDate ? new Date(b.appliedDate).getTime() : 0;
+    return (ad - bd) * dir;
+  });
+  const totalPages = Math.max(1, Math.ceil(sorted.length / pageSize));
+  const pageClamped = Math.min(page, totalPages);
+  const start = (pageClamped - 1) * pageSize;
+  const paged = sorted.slice(start, start + pageSize);
+
+  const toggleSort = (key) => {
+    if (sortBy === key) {
+      setSortDir(d => (d === 'asc' ? 'desc' : 'asc'));
+    } else {
+      setSortBy(key);
+      setSortDir('asc');
+    }
+  };
 
   return (
     <div className="candidates-list">
@@ -109,20 +161,45 @@ const CandidatesList = () => {
           <option value="rejected">Rejected</option>
         </select>
       </div>
+      <div className="candidates-table-wrap">
+        <table className="candidates-table">
+          <thead>
+            <tr>
+              <th onClick={() => toggleSort('name')}>Name</th>
+              <th onClick={() => toggleSort('email')}>Email</th>
+              <th onClick={() => toggleSort('job')}>Job</th>
+              <th onClick={() => toggleSort('stage')}>Stage</th>
+              <th onClick={() => toggleSort('appliedDate')}>Applied</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {paged.map(candidate => (
+              <tr key={candidate.id}>
+                <td>
+                  <Link to={'/candidates/' + candidate.id} className="candidate-link">{candidate.name}</Link>
+                </td>
+                <td>{candidate.email}</td>
+                <td>{jobsMap[candidate.jobId] || '—'}</td>
+                <td>
+                  <span className="stage-badge" style={{ backgroundColor: getStageColor(candidate.stage) }}>
+                    {candidate.stage}
+                  </span>
+                </td>
+                <td>{candidate.appliedDate ? new Date(candidate.appliedDate).toLocaleDateString() : '—'}</td>
+                <td>
+                  <Link to={'/candidates/' + candidate.id} className="button small">View</Link>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
 
-      <div className="candidates-grid">
-        {candidates.data.map(candidate => (
-          <Link to={'/candidates/' + candidate.id} key={candidate.id} className="candidate-card">
-            <h3>{candidate.name}</h3>
-            <div className="candidate-email">{candidate.email}</div>
-            <div 
-              className="candidate-stage"
-              style={{ backgroundColor: getStageColor(candidate.stage) }}
-            >
-              {candidate.stage}
-            </div>
-          </Link>
-        ))}
+      <div className="pagination">
+        <button className="button secondary" disabled={pageClamped <= 1} onClick={() => setPage(p => Math.max(1, p - 1))}>Prev</button>
+        <span className="page-info">Page {pageClamped} of {totalPages}</span>
+        <button className="button secondary" disabled={pageClamped >= totalPages} onClick={() => setPage(p => Math.min(totalPages, p + 1))}>Next</button>
       </div>
       
       {candidates.data.length === 0 && (

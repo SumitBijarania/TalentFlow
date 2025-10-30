@@ -1,0 +1,61 @@
+.candidate-profile {
+  max-width: 600px;
+  margin: 20px auto;
+  padding: 20px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background-color: #fff;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  font-family: Arial, sans-serif;
+}
+
+.candidate-profile-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.avatar {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background-color: #007bff;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  font-weight: bold;
+  margin-right: 15px;
+}
+
+.candidate-info {
+  flex: 1;
+}
+
+.candidate-name {
+  margin: 0;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.candidate-email {
+  margin: 5px 0 0;
+  color: #555;
+  font-size: 14px;
+}
+
+.candidate-details {
+  margin-top: 20px;
+}
+
+.candidate-detail {
+  margin-bottom: 10px;
+  font-size: 16px;
+}
+
+.candidate-profile-error {
+  text-align: center;
+  color: red;
+  font-size: 18px;
+}
